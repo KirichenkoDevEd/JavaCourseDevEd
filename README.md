@@ -1,1 +1,3 @@
 # JavaCourseDevEd
+
+Spirit, respect, communication. 
