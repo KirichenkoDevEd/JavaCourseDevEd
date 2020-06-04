@@ -1,9 +1,10 @@
 package littleshop.service.cashierService.impl;
 
+import littleshop.exceptions.CashierWorkException;
 import littleshop.models.Bill;
 import littleshop.models.Customer;
-import littleshop.models.enums.Discount;
 import littleshop.models.Goods;
+import littleshop.models.enums.Discount;
 import littleshop.service.cashierService.ICashierService;
 import java.math.BigDecimal;
 import java.util.List;
@@ -47,11 +48,11 @@ public class CashierService implements ICashierService {
     }
 
     @Override
-    public Bill giveBill(String nameOfCustomer, List<Goods> order, BigDecimal sum) {
+    public Bill giveBill(String nameOfCustomer, List<Goods> order, BigDecimal sum) throws CashierWorkException {
         if (nameOfCustomer != null && order != null && order.isEmpty()) {
             return new Bill(nameOfCustomer, order, sum);
         } else {
-            return new Bill(BigDecimal.ZERO);
+            throw new CashierWorkException("Invalid parameters for creating the bill!");
         }
     }
 }

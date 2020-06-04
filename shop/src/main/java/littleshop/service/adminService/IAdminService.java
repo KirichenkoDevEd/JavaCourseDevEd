@@ -1,4 +1,5 @@
 package littleshop.service.adminService;
+import littleshop.exceptions.AdminWorkException;
 import littleshop.models.Department;
 import littleshop.models.employee.Consultant;
 
@@ -13,7 +14,7 @@ public interface IAdminService {
      * @param department department
      * @return True in case adding was success, otherwise - false.
      */
-    boolean addConsultantToDep(Consultant consultant, Department department);
+    boolean addConsultantToDep(Consultant consultant, Department department) throws AdminWorkException;
 
     /**
      * Method change consultant's department.
@@ -22,6 +23,6 @@ public interface IAdminService {
      * @param department department
      * @return True in case changing was success, otherwise - false.
      */
-    boolean changeConsultantsDep(Consultant consultant, Department department);
+    boolean changeConsultantsDep(Consultant consultant, Department department) throws AdminWorkException;
 
 }

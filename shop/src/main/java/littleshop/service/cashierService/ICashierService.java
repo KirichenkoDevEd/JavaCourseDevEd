@@ -1,5 +1,6 @@
 package littleshop.service.cashierService;
 
+import littleshop.exceptions.CashierWorkException;
 import littleshop.models.Bill;
 import littleshop.models.Customer;
 import littleshop.models.enums.Discount;
@@ -44,5 +45,5 @@ public interface ICashierService {
      * @param order          Total order
      * @param sum            Sum of order     * @return bill
      */
-    Bill giveBill(String nameOfCustomer, List<Goods> order, BigDecimal sum);
+    Bill giveBill(String nameOfCustomer, List<Goods> order, BigDecimal sum) throws CashierWorkException;
 }

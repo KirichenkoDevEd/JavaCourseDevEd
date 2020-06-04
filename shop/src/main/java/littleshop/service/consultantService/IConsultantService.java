@@ -1,5 +1,6 @@
 package littleshop.service.consultantService;
 
+import littleshop.exceptions.ConsultWorkException;
 import littleshop.models.Goods;
 import littleshop.models.employee.Consultant;
 
@@ -14,7 +15,7 @@ public interface IConsultantService {
      * @param goods required goods
      * @return Info about goods.
      */
-    String consult(Goods goods);
+    String consult(Goods goods) throws ConsultWorkException;
 
     /**
      * Change status for Consultant.

@@ -1,11 +1,12 @@
 package littleshop.service.storeKeeperService.impl;
 
+import littleshop.exceptions.StoreKeeperWorkException;
 import littleshop.models.Department;
 import littleshop.models.Goods;
 import littleshop.models.Report;
-import littleshop.models.storage.Storage;
 import littleshop.models.enums.Brand;
 import littleshop.models.enums.GoodsGroup;
+import littleshop.models.storage.Storage;
 import littleshop.service.storeKeeperService.IStoreKeeperService;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +16,11 @@ public class StoreKeeperService implements IStoreKeeperService {
     private Storage storage = Storage.getInstance();
 
     @Override
-    public void registerGoods(Goods goods, int quantity) {
+    public void registerGoods(Goods goods, int quantity) throws StoreKeeperWorkException {
         Department department = goods.getDepartment();
+        if (department == null) {
+            throw new StoreKeeperWorkException("There is no Department for register to!");
+        }
         if (!Storage.totalGoods.get(department).containsKey(goods)) {
             Storage.totalGoods.get(department).put(goods, quantity);
         } else {
@@ -26,7 +30,7 @@ public class StoreKeeperService implements IStoreKeeperService {
     }
 
     @Override
-    public Report sortGoods(Map<Goods, Integer> goodsForSorting, String storeKeeperName) {
+    public Report sortGoods(Map<Goods, Integer> goodsForSorting, String storeKeeperName) throws StoreKeeperWorkException {
         int countOfDeps = 0;
         for (Goods goods : goodsForSorting.keySet()) {
             for (Department department : Storage.departments) {
@@ -54,7 +58,10 @@ public class StoreKeeperService implements IStoreKeeperService {
     }
 
     @Override
-    public Map<Goods, Integer> getQuantityByBrand(Brand brand) {
+    public Map<Goods, Integer> getQuantityByBrand(Brand brand) throws StoreKeeperWorkException {
+        if (brand == null){
+            throw new StoreKeeperWorkException("Brand is invalid!");
+        }
         Map<Goods, Integer> result = new HashMap<>();
         for (Map.Entry<Department, Map<Goods, Integer>> entry : Storage.totalGoods.entrySet()) {
             Map<Goods, Integer> goodsIntegerMap = entry.getValue();
@@ -68,7 +75,10 @@ public class StoreKeeperService implements IStoreKeeperService {
     }
 
     @Override
-    public Map<Goods, Integer> getQuantityByGroup(GoodsGroup group) {
+    public Map<Goods, Integer> getQuantityByGroup(GoodsGroup group) throws StoreKeeperWorkException {
+        if (group == null){
+            throw new StoreKeeperWorkException("Group is invalid!");
+        }
         Map<Goods, Integer> result = new HashMap<>();
         for (Map.Entry<Department, Map<Goods, Integer>> entry : Storage.totalGoods.entrySet()) {
             Map<Goods, Integer> goodsIntegerMap = entry.getValue();
@@ -82,7 +92,10 @@ public class StoreKeeperService implements IStoreKeeperService {
     }
 
     @Override
-    public Map<Goods, Integer> getQuantityByDepartment(Department department) {
+    public Map<Goods, Integer> getQuantityByDepartment(Department department) throws StoreKeeperWorkException {
+        if (department == null){
+            throw new StoreKeeperWorkException("Department is invalid!");
+        }
         return Storage.totalGoods.get(department);
     }
 }
